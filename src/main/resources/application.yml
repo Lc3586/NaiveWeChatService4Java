@@ -98,7 +98,7 @@ service:
   version: 1.0.0
   #启用swagger
   enableSwagger: false
-  #站点资源文件根目录相对路径
+  #站点资源文件根目录路径
   wwwRootDirectory: wwwroot
 
 #项目拓展
@@ -111,16 +111,6 @@ project:
       mp: master
       #默认的商户号名称
       pay: master
-      #默认的公众号令牌
-      token:
-      #默认的AES加密密钥
-      aesKey:
-      #默认的p12证书地址
-      certFilePath:
-      #默认的证书密码
-      certPassword:
-      #默认的pem公钥文件地址
-      privateKeyPath:
       #默认启用微信终端服务
       enableMpEndpointServlet: true
       #默认启用微信网页授权服务
@@ -145,67 +135,6 @@ project:
           enableMpEndpointServlet: true
           #微信客户端终端的接口
           mpEndpointUrl: /wechat/endpoint
-          #          #语言
-          #          language: zh_CN
-          #          #启用微信网页授权服务
-          #          enableOAuth2Servlet: true
-          #启用服务无需配置以下选项
-      #          #基础授权接口
-      #          oAuthBaseUrl:
-      #          #用户信息授权接口
-      #          oAuthUserInfoUrl:
-      #多商户号配置
-      multiPay:
-        #默认商户号
-        master:
-          #启用
-          enable: false
-          #公众账号标识
-          appId:
-          #商户号
-          mchId:
-          #商户API秘钥
-          mchKey:
-          #服务商模式下的子商户公众号标识
-          subAppId:
-          #服务商模式下的子商户号
-          subMchId:
-          #p12证书文件的绝对路径或者以classpath:开头的类路径
-          certFilePath:
-          #证书密码
-          certPassword:
-          #微信支付分serviceId
-          serviceId:
-          #V3接口秘钥
-          apiV3Key:
-          #V3证书序列号
-          certSerialNo:
-          #apiclient_key.pem证书文件的绝对路径或者以classpath:开头的类路径
-          privateKeyPath:
-          #apiclient_cert.pem证书文件的绝对路径或者以classpath:开头的类路径
-          privateCertPath:
-          #          #启用微信收付通通知服务
-          #          enablePayNotifyServlet: true
-          #启用服务时无需配置以下选项
-      #          #接收收付通通知的URL
-      #          payNotifyUrl:
-      #          #接收收付通通知的URL
-      #          payNotifyV3Url:
-      #          #接收微信支付分的URL
-      #          payScoreNotifyV3Url:
-      #          #接收微信支付退款结果通知的回调地址
-      #          refundNotifyUrl:
-      #          #接收微信支付退款结果通知的回调地址
-      #          refundNotifyV3Url:
-
-      #开发配置
-      dev:
-        #调试模式
-        debug: true
-        #开发令牌验证接口（如未配置此属性，则中间件会自动生成）
-        tokenVerificationUrl:
-#        #编码格式
-#        encoding: UTF-8
 
 jasypt:
   encryptor:

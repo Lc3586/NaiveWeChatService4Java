@@ -11,7 +11,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import project.extension.standard.entity.IEntityExtension;
 import project.extension.standard.exception.BusinessException;
 import project.extension.wechat.config.MpConfig;
-import project.extension.wechat.core.mp.handler.IWeChatOAuthHandler;
+import project.extension.wechat.core.mp.handler.IWeChatOAuth2Handler;
 import project.extension.wechat.core.mp.servlet.WeChatOAuth2Servlet;
 import project.extension.wechat.core.mp.standard.IWeChatMpService;
 import top.lctr.naive.wechat.service.business.service.Interface.IOAuth2Service;
@@ -37,7 +37,7 @@ import java.util.Map;
 @Scope("prototype")
 public class OAuth2ServiceImpl
         implements IOAuth2Service,
-                   IWeChatOAuthHandler {
+                   IWeChatOAuth2Handler {
     public OAuth2ServiceImpl(IWeChatMpService weChatMpService,
                              IUserInfoService userInfoService,
                              RedisTemplate<String, RedisScopeInfo> scopeInfoRedisTemplate,

@@ -2,9 +2,9 @@ package top.lctr.naive.wechat.service.common;
 
 import org.junit.jupiter.api.Assertions;
 import project.extension.ioc.IOCExtension;
-import project.extension.wechat.config.BaseConfig;
 import project.extension.wechat.config.MpConfig;
 import project.extension.wechat.config.PayConfig;
+import project.extension.wechat.config.WeChatBaseConfig;
 import project.extension.wechat.core.INaiveWeChatServiceProvider;
 import project.extension.wechat.core.mp.standard.IWeChatMpService;
 import project.extension.wechat.core.pay.standard.IWeChatPayService;
@@ -17,7 +17,7 @@ import project.extension.wechat.core.pay.standard.IWeChatPayService;
  * @date 2023-03-17
  */
 public class ServiceObjectResolve {
-    public static BaseConfig baseConfig;
+    public static WeChatBaseConfig baseConfig;
 
     public static IWeChatMpService masterWeChatMPService;
 
@@ -29,13 +29,13 @@ public class ServiceObjectResolve {
      * 注入
      */
     public static void injection() {
-        baseConfig = IOCExtension.applicationContext.getBean(BaseConfig.class);
+        baseConfig = IOCExtension.applicationContext.getBean(WeChatBaseConfig.class);
 
         Assertions.assertNotNull(baseConfig,
                                  "未获取到BaseConfig");
 
         System.out.printf("\r\n%s已注入\r\n",
-                          BaseConfig.class.getName());
+                          WeChatBaseConfig.class.getName());
 
 
 //        naiveWeChatServiceProvider = IOCExtension.applicationContext.getBean(INaiveWeChatServiceProvider.class);

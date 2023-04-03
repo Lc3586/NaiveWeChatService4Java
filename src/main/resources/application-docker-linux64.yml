@@ -8,6 +8,8 @@ logging:
 service:
   #启用swagger
   enableSwagger: false
+  #站点资源文件根目录路径
+  wwwRootDirectory: /app-data/naive-wechat-service/wwwroot
 
 #项目拓展
 project:

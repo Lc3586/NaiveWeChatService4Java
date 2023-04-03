@@ -56,7 +56,7 @@
         <maven.test.skip>true</maven.test.skip>
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <server.id>rdc-releases</server.id>
-        <project.extension.model.version>1.0.3-SNAPSHOT</project.extension.model.version>
+        <project.extension.model.version>1.0.4-SNAPSHOT</project.extension.model.version>
         <!--    请勿升级SpringBoot版本！    -->
         <spring.boot.version>2.7.5</spring.boot.version>
         <spring.framework.version>5.3.23</spring.framework.version>
@@ -302,40 +302,25 @@
                 <os>win64</os>
             </properties>
         </profile>
-        <!-- 打包环境 -->
+        <!-- 发布环境 -->
         <profile>
-            <id>prod-win32</id>
+            <id>docker-linux64</id>
             <properties>
-                <env>prod</env>
-                <os>win32</os>
-            </properties>
-        </profile>
-        <profile>
-            <id>prod-win64</id>
-            <properties>
-                <env>prod</env>
-                <os>win64</os>
-            </properties>
-        </profile>
-        <profile>
-            <id>prod-linux32</id>
-            <properties>
-                <env>prod</env>
-                <os>linux32</os>
-            </properties>
-        </profile>
-        <profile>
-            <id>prod-linux64</id>
-            <properties>
-                <env>prod</env>
+                <env>docker</env>
                 <os>linux64</os>
             </properties>
         </profile>
-        <!-- 发布环境 -->
+        <profile>
+            <id>publish-win64</id>
+            <properties>
+                <env>publish</env>
+                <os>win64</os>
+            </properties>
+        </profile>
+        <!-- 发布maven依赖 -->
         <profile>
             <id>rdc</id>
             <properties>
-                <env>publish</env>
                 <altReleaseDeploymentRepository>
                     rdc-releases::default::https://packages.aliyun.com/maven/repository/2306545-release-DI7rwN/
                 </altReleaseDeploymentRepository>
@@ -363,19 +348,6 @@
             <groupId>top.lctr</groupId>
             <artifactId>project-extension-redis</artifactId>
             <version>${project.extension.model.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>top.lctr</groupId>
-            <artifactId>project-extension-document</artifactId>
-            <version>${project.extension.model.version}</version>
-        </dependency>
-
-        <!--    图片压缩 -->
-        <dependency>
-            <groupId>net.coobird</groupId>
-            <artifactId>thumbnailator</artifactId>
-            <version>0.4.18</version>
         </dependency>
 
         <!-- servlet包 -->

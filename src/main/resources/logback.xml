@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!-- 日志存放路径 -->
-    <property name="log.path" value="logs"/>
+    <property name="log.path" value="/app-data/naive-wechat-service/logs"/>
     <!-- 日志输出格式 -->
     <property name="log.pattern"
               value="%date{yyyy-MM-dd HH:mm:ss} %highlight(%-5level) %boldMagenta(${PID:- }) --- [%thread] %cyan(%logger{40}) : %msg %n"/>

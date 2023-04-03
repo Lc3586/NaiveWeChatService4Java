@@ -35,7 +35,7 @@ public class ServiceConfig {
     private Boolean enableSwagger;
 
     /**
-     * 站点资源文件根目录相对路径
+     * 站点资源文件根目录路径
      */
     private String wwwRootDirectory;
 
@@ -84,7 +84,7 @@ public class ServiceConfig {
     }
 
     /**
-     * 站点资源文件根目录相对路径
+     * 站点资源文件根目录路径
      */
     public String getWwwRootDirectory() {
         return wwwRootDirectory;

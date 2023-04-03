@@ -4,14 +4,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.extension.openapi.annotations.*;
-import project.extension.openapi.fastjson.JsonExtension;
-import project.extension.standard.api.response.ApiResultData;
 import top.lctr.naive.wechat.service.business.service.Interface.IOAuth2Service;
-
-import java.util.Collection;
 
 /**
  * 微信网页授权服务控制器
