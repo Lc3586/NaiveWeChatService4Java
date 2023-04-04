@@ -19,7 +19,7 @@ server:
 # 日志配置
 logging:
   level:
-    top.lctr.naive.file.system: warn
+    top.lctr.naive.file.system: debug
     org.springframework: warn
 
 # Spring配置
@@ -104,13 +104,38 @@ service:
 #项目拓展
 project:
   extension:
+    mybatis:
+      # 默认的数据源
+      dataSource: master
+      # mybatis配置文件路径
+      configLocation: classpath:mybatis/mybatis-config.xml
+      # 需要扫描的存放实体类的包（包括TypeAliasesPackage）
+      scanEntitiesPackages: top.lctr.naive.file.system.entity.**
+      # 需要扫描的存放Mapper接口类的包（可选）
+      #      scanMapperPackages: project.extension.mybatis.edge.mapper.**
+      # 需要扫描的存放Mapper配置类的包
+      #      scanMapperXmlLocations: classpath:mybatis/mapper/**/*Mapper.xml
+      # 默认的实体类表明/列名命名规则
+      nameConvertType: CamelCaseToPascalCase
+      # 多数据源配置
+      multiDataSource:
+        #主库
+        master:
+          enable: true
+          dbType: JdbcMariaDB10
+          nameConvertType: PascalCaseToUnderscoreWithLower
+          properties:
+            # 连接字符串
+            url: ENC(zy1EaEe6RBSJN/NFl1bvZJmVWNzMaUIhw8fsvSSFVnZWUV066/FgoaArc1SWNqYkgPnYpIRAasOl8FiwpZktz1JHEVz1AI4WaETkaPEv1i4iJ/oXU37wbtfmWqbYwD7VTo2ZT5rYxW6SLTF9Mdip15E0IxKO46YYLBka24Q0/MmMQO70HJPzFkd1GyuIN3rWbqI9y+ANrPK7SAgv/ZsF6gP5Donuxvcxupjy8H/HHMGg2lLB00k9aYZ6mzrcgMxLFLi7RaiiLeM=)
+            # 用户名
+            username: ENC(LWfGadRuyaYT3ZIEFoEs/w==)
+            # 密码
+            password: ENC(Q88XTJSttazzBLg5bVN32Oyn0e5CagP/+MXtmSUYGxc=)
     wechat:
       #当前服务器的根地址
-      rootUrl: http://localhost:8080
+      rootUrl: ENC(f/3LzDYtp1JHBvfWC5+oNu9xb22RBCSH/VvX+YCYavs=)
       #默认的公众号名称
       mp: master
-      #默认的商户号名称
-      pay: master
       #默认启用微信终端服务
       enableMpEndpointServlet: true
       #默认启用微信网页授权服务
@@ -124,17 +149,17 @@ project:
           #启用
           enable: true
           #公众账号标识
-          appId: ENC(msaKT5SHEgfjzcPsKFrw97NMlnye/ZgW8XMEqYYdX1A=)
+          appId: ENC(XAOpIx+nd8M1KwCFPBQblFDkdh8XQ6xEjf2ZHY4Trys=)
           #公众账号密钥
-          appSecret: ENC(dN051J9in9rY/RMPpuiXT+zSvM5vk6KC0YYqCGQivlIS2gXHEUAJ2xmQRNuz/tCH)
+          appSecret: ENC(SUgnL0Yuk0wDz3AWPKyRC+CDoap4Omu0DG4BNnf/N/j16f2RN2yl5W1s6B34cplk)
           #令牌
-          token: ENC(Yf6Wd1NhDym9ZqoyWeVR15P5rc5a14PVY7IiEL4xPB50XwFWIEfqyvsajb5sdDCv)
+          token: ENC(EuptQrmInSt/IkMy3azTjWkOkiswNCcpemW/KUySWQMW7+8XMGZd+bxXwKkrs2tZ)
           #AES加密密钥
-          aesKey: ENC(H4ZNsKZmGrjDPH3W+exHg/KxxkxszRiQoL3mpXjw7Ra2zvQtHf0uDJuBVR1cW3ap5JyiKDpd9fI=)
+          aesKey: ENC(h0rixmhU2SrV4zQu68CrCnqdjcRARmWRX0OySwo+duyIR4siYZGiIOJ3bvwRp0LgKqZCksHfwvw=)
           #启用微信终端服务
           enableMpEndpointServlet: true
           #微信客户端终端的接口
-          mpEndpointUrl: /wechat/endpoint
+          mpEndpointUrl: ENC(0n/JBZRJQ5q9HSUQ6VWNsdj+DiLsuz8xaC1bquVyQ64=)
 
 jasypt:
   encryptor:
