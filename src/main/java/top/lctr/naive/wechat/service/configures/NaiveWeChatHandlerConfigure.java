@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import project.extension.wechat.config.MpConfig;
 import project.extension.wechat.config.PayConfig;
+import project.extension.wechat.core.INaiveWeChatService;
 import project.extension.wechat.core.mp.handler.IWeChatOAuth2Handler;
 import project.extension.wechat.core.mp.servlet.WeChatOAuth2Servlet;
-import project.extension.wechat.core.mp.standard.IWeChatMpService;
 import project.extension.wechat.core.pay.handler.IWeChatPayNotifyHandler;
 import top.lctr.naive.wechat.service.business.service.Interface.IConfigManageService;
 import top.lctr.naive.wechat.service.business.utils.ConfigDatabaseStorage;
@@ -29,9 +29,11 @@ public class NaiveWeChatHandlerConfigure {
      * 设置微信配置存储对象
      */
     @Autowired
-    public void setupConfigStorage(IWeChatMpService mpService,
+    public void setupConfigStorage(INaiveWeChatService naiveWeChatService,
                                    IConfigManageService configManageService) {
-        mpService.setMpConfigStorage(new ConfigDatabaseStorage(configManageService));
+        naiveWeChatService.getDefaultWeChatMpService()
+                          .setMpConfigStorage((mpConfig) -> new ConfigDatabaseStorage(mpConfig,
+                                                                                      configManageService));
     }
 
     /**

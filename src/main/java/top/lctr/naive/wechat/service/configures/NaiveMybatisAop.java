@@ -3,6 +3,7 @@ package top.lctr.naive.wechat.service.configures;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Configuration;
 import project.extension.date.DateExtension;
 import project.extension.mybatis.edge.aop.INaiveAop;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
  * @date 2023-03-02
  */
 @Configuration
+@AutoConfigureBefore(NaiveWeChatHandlerConfigure.class)
 public class NaiveMybatisAop {
     /**
      * 日志组件

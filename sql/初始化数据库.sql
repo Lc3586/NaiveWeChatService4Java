@@ -11,7 +11,7 @@
  Target Server Version : 100605
  File Encoding         : 65001
 
- Date: 29/03/2023 16:29:26
+ Date: 06/04/2023 11:54:37
 */
 
 SET NAMES utf8mb4;
@@ -25,10 +25,10 @@ CREATE TABLE `wechat_config`  (
   `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
   `app_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '微信公众号标识',
   `secret` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '密钥（加密存储）',
-  `token` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '令牌（加密存储）',
+  `token` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '令牌（加密存储）',
+  `aes_key` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'AES加密密钥（加密存储）',
   `template_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '模板标识',
   `access_token` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '访问令牌（加密存储）',
-  `aes_key` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'AES加密密钥（加密存储）',
   `expires_time` bigint(20) NULL DEFAULT NULL COMMENT '过期时间',
   `oauth2redirect_uri` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '身份验证跳转地址',
   `http_proxy_host` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'http代理主机',
@@ -44,6 +44,8 @@ CREATE TABLE `wechat_config`  (
   `card_api_ticket` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '刷卡支付接口票据（加密存储）',
   `card_api_ticket_expires_time` bigint(20) NULL DEFAULT NULL COMMENT '刷卡支付接口票据过期时间',
   `tmp_dir_file` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '临时文件存储目录',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信配置' ROW_FORMAT = Dynamic;
 

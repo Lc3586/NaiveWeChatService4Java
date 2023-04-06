@@ -19,7 +19,7 @@ server:
 # 日志配置
 logging:
   level:
-    top.lctr.naive.file.system: debug
+    top.lctr.naive.wechat.service: debug
     org.springframework: warn
 
 # Spring配置
@@ -126,7 +126,7 @@ project:
           nameConvertType: PascalCaseToUnderscoreWithLower
           properties:
             # 连接字符串
-            url: ENC(zy1EaEe6RBSJN/NFl1bvZJmVWNzMaUIhw8fsvSSFVnZWUV066/FgoaArc1SWNqYkgPnYpIRAasOl8FiwpZktz1JHEVz1AI4WaETkaPEv1i4iJ/oXU37wbtfmWqbYwD7VTo2ZT5rYxW6SLTF9Mdip15E0IxKO46YYLBka24Q0/MmMQO70HJPzFkd1GyuIN3rWbqI9y+ANrPK7SAgv/ZsF6gP5Donuxvcxupjy8H/HHMGg2lLB00k9aYZ6mzrcgMxLFLi7RaiiLeM=)
+            url: ENC(et5WyCyB+Tg7q3HtouiIY57he/JUZthYE/xzHFhK/VF35puvAo+3gxR2VxAibH7F+B2ZSsLvDHc5hH8M3LlzkgkEAhmh676UG6tnso1Av+CfElXdcEJTc7pwIXDqwBBgWKEw/MaTwXx3Hwmnfq9MPFtqTzuT8AXmI5IuzRAD8Eju6hAaL2JD3G9WfkBgQfe5OPJfjzvg65HSbx4KuCs+cj/1OReS8mj0tX9SABMgo57kKzG4ytcpAwXejOIGay86FXhS7uV7zZw=)
             # 用户名
             username: ENC(LWfGadRuyaYT3ZIEFoEs/w==)
             # 密码

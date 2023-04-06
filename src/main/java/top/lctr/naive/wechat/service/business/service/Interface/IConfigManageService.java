@@ -68,10 +68,16 @@ public interface IConfigManageService {
     /**
      * 创建新配置
      *
-     * @param appId 微信公众号标识
+     * @param appId  微信公众号标识
+     * @param secret 公众账号密钥
+     * @param token  令牌
+     * @param aesKey AES加密密钥
      * @return 配置
      */
-    WeChatConfig newConfig(String appId);
+    WeChatConfig newConfig(String appId,
+                           String secret,
+                           String token,
+                           String aesKey);
 
     /**
      * 查询指定字段的值

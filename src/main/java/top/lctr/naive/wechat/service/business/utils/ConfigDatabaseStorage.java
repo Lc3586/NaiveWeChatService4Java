@@ -5,6 +5,7 @@ import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
+import project.extension.wechat.config.MpConfig;
 import top.lctr.naive.wechat.service.business.service.Interface.IConfigManageService;
 import top.lctr.naive.wechat.service.entityFields.WC_Fields;
 
@@ -18,9 +19,14 @@ import java.io.File;
  */
 public class ConfigDatabaseStorage
         extends WxMpDefaultConfigImpl {
-    public ConfigDatabaseStorage(IConfigManageService configManageService) {
+    public ConfigDatabaseStorage(MpConfig mpConfig,
+                                 IConfigManageService configManageService) {
+        this.mpConfig = mpConfig;
         this.configManageService = configManageService;
+        initial();
     }
+
+    private final MpConfig mpConfig;
 
     private final IConfigManageService configManageService;
 
@@ -29,11 +35,24 @@ public class ConfigDatabaseStorage
      */
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * 初始化
+     */
+    private void initial() {
+        this.setAppId(mpConfig.getAppId());
+        this.setSecret(mpConfig.getAppSecret());
+        this.setToken(mpConfig.getToken());
+        this.setAesKey(mpConfig.getAesKey());
+
+        if (!configManageService.configExist(appId))
+            configManageService.newConfig(appId,
+                                          secret,
+                                          token,
+                                          aesKey);
+    }
+
     @Override
     public void setAppId(String appId) {
-        if (!configManageService.configExist(appId))
-            configManageService.newConfig(appId);
-
         super.setAppId(appId);
     }
 
@@ -166,10 +185,11 @@ public class ConfigDatabaseStorage
     public long getExpiresTime() {
         if (super.getExpiresTime() == 0) {
             if (StringUtils.hasText(getAppId())) {
-                long value = configManageService.queryValue(getAppId(),
+                Long value = configManageService.queryValue(getAppId(),
                                                             WC_Fields.expiresTime,
                                                             long.class);
-                super.setExpiresTime(value);
+                if (value != null)
+                    super.setExpiresTime(value);
             }
         }
 
@@ -241,10 +261,11 @@ public class ConfigDatabaseStorage
     public int getHttpProxyPort() {
         if (super.getHttpProxyPort() == 0) {
             if (StringUtils.hasText(getAppId())) {
-                int value = configManageService.queryValue(getAppId(),
-                                                           WC_Fields.httpProxyPort,
-                                                           int.class);
-                super.setHttpProxyPort(value);
+                Integer value = configManageService.queryValue(getAppId(),
+                                                               WC_Fields.httpProxyPort,
+                                                               int.class);
+                if (value != null)
+                    super.setHttpProxyPort(value);
             }
         }
 
@@ -316,10 +337,11 @@ public class ConfigDatabaseStorage
     public int getRetrySleepMillis() {
         if (super.getRetrySleepMillis() == 0) {
             if (StringUtils.hasText(getAppId())) {
-                int value = configManageService.queryValue(getAppId(),
-                                                           WC_Fields.retrySleepMillis,
-                                                           int.class);
-                super.setRetrySleepMillis(value);
+                Integer value = configManageService.queryValue(getAppId(),
+                                                               WC_Fields.retrySleepMillis,
+                                                               int.class);
+                if (value != null)
+                    super.setRetrySleepMillis(value);
             }
         }
 
@@ -341,10 +363,11 @@ public class ConfigDatabaseStorage
     public int getMaxRetryTimes() {
         if (super.getMaxRetryTimes() == 0) {
             if (StringUtils.hasText(getAppId())) {
-                int value = configManageService.queryValue(getAppId(),
-                                                           WC_Fields.maxRetryTimes,
-                                                           int.class);
-                super.setMaxRetryTimes(value);
+                Integer value = configManageService.queryValue(getAppId(),
+                                                               WC_Fields.maxRetryTimes,
+                                                               int.class);
+                if (value != null)
+                    super.setMaxRetryTimes(value);
             }
         }
 
@@ -391,10 +414,11 @@ public class ConfigDatabaseStorage
     public long getJsapiTicketExpiresTime() {
         if (super.getJsapiTicketExpiresTime() == 0) {
             if (StringUtils.hasText(getAppId())) {
-                long value = configManageService.queryValue(getAppId(),
+                Long value = configManageService.queryValue(getAppId(),
                                                             WC_Fields.jsapiTicketExpiresTime,
                                                             long.class);
-                super.setJsapiTicketExpiresTime(value);
+                if (value != null)
+                    super.setJsapiTicketExpiresTime(value);
             }
         }
 
@@ -441,10 +465,11 @@ public class ConfigDatabaseStorage
     public long getSdkTicketExpiresTime() {
         if (super.getSdkTicketExpiresTime() == 0) {
             if (StringUtils.hasText(getAppId())) {
-                long value = configManageService.queryValue(getAppId(),
+                Long value = configManageService.queryValue(getAppId(),
                                                             WC_Fields.sdkTicketExpiresTime,
                                                             long.class);
-                super.setSdkTicketExpiresTime(value);
+                if (value != null)
+                    super.setSdkTicketExpiresTime(value);
             }
         }
 
@@ -491,10 +516,11 @@ public class ConfigDatabaseStorage
     public long getCardApiTicketExpiresTime() {
         if (super.getCardApiTicketExpiresTime() == 0) {
             if (StringUtils.hasText(getAppId())) {
-                long value = configManageService.queryValue(getAppId(),
+                Long value = configManageService.queryValue(getAppId(),
                                                             WC_Fields.cardApiTicketExpiresTime,
                                                             long.class);
-                super.setCardApiTicketExpiresTime(value);
+                if (value != null)
+                    super.setCardApiTicketExpiresTime(value);
             }
         }
 

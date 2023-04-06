@@ -17,7 +17,7 @@ import java.util.Date;
  * @author LCTR
  * @date 2023-03-27
  */
-@TableSetting
+@TableSetting("WechatUserInfo")
 @Alias("WechatUserInfo")
 @Data
 public class WeChatUserInfo {

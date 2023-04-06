@@ -127,29 +127,9 @@ public final class WC_Fields {
     public static final String tmpDirFile = "tmpDirFile";
 
     /**
-     * 启用
-     */
-    public static final String enable = "enable";
-
-    /**
-     * 备注
-     */
-    public static final String remark = "remark";
-
-    /**
-     * 创建者
-     */
-    public static final String createBy = "createBy";
-
-    /**
      * 创建时间
      */
     public static final String createTime = "createTime";
-
-    /**
-     * 更新者
-     */
-    public static final String updateBy = "updateBy";
 
     /**
      * 更新时间

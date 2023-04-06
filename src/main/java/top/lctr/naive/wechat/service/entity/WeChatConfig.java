@@ -17,7 +17,7 @@ import java.util.Date;
  * @author LCTR
  * @date 2023-03-27
  */
-@TableSetting
+@TableSetting("WechatConfig")
 @Alias("WechatConfig")
 @Data
 public class WeChatConfig {
@@ -265,35 +265,6 @@ public class WeChatConfig {
     private String tmpDirFile;
 
     /**
-     * 启用
-     */
-    @OpenApiDescription("启用")
-    @ColumnSetting(isNullable = false)
-    @OpenApiSubTag({"List",
-                    "Detail",
-                    "Create",
-                    "Edit"})
-    private Boolean enable;
-
-    /**
-     * 备注
-     */
-    @OpenApiDescription("备注")
-    @ColumnSetting(length = -4)
-    @OpenApiSubTag({"Detail",
-                    "Create",
-                    "Edit"})
-    private String remark;
-
-    /**
-     * 创建者
-     */
-    @OpenApiDescription("创建者")
-    @ColumnSetting(length = 50)
-    @OpenApiSubTag({"Detail"})
-    private String createBy;
-
-    /**
      * 创建时间
      */
     @OpenApiDescription("创建时间")
@@ -302,15 +273,6 @@ public class WeChatConfig {
     @OpenApiSubTag({"List",
                     "Detail"})
     private Date createTime;
-
-    /**
-     * 更新者
-     */
-    @OpenApiDescription("更新者")
-    @ColumnSetting(length = 50)
-    @OpenApiSubTag({"Detail",
-                    "_Edit"})
-    private String updateBy;
 
     /**
      * 更新时间

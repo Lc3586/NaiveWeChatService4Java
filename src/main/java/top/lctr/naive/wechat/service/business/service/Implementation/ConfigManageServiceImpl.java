@@ -57,6 +57,80 @@ public class ConfigManageServiceImpl
     private final IEntityExtension entityExtension;
 
     /**
+     * 缓存，用于直接读取数据
+     */
+    private final static Map<String, Map<String, Object>> cacheValueMap = new HashMap<>();
+
+    /**
+     * 更新至缓存
+     *
+     * @param config 配置信息
+     */
+    private void updateCache(WeChatConfig config) {
+        if (!cacheValueMap.containsKey(config.getAppId()))
+            cacheValueMap.put(config.getAppId(),
+                              new HashMap<>());
+        Map<String, Object> valueMap = cacheValueMap.get(config.getAppId());
+        valueMap.put(WC_Fields.secret,
+                     config.getSecret());
+        valueMap.put(WC_Fields.token,
+                     config.getToken());
+        valueMap.put(WC_Fields.aesKey,
+                     config.getAesKey());
+        valueMap.put(WC_Fields.templateId,
+                     config.getTemplateId());
+        valueMap.put(WC_Fields.accessToken,
+                     config.getAccessToken());
+        valueMap.put(WC_Fields.expiresTime,
+                     config.getExpiresTime());
+        valueMap.put(WC_Fields.oauth2redirectUri,
+                     config.getOauth2redirectUri());
+        valueMap.put(WC_Fields.httpProxyHost,
+                     config.getHttpProxyHost());
+        valueMap.put(WC_Fields.httpProxyPort,
+                     config.getHttpProxyPort());
+        valueMap.put(WC_Fields.httpProxyUsername,
+                     config.getHttpProxyUsername());
+        valueMap.put(WC_Fields.retrySleepMillis,
+                     config.getRetrySleepMillis());
+        valueMap.put(WC_Fields.maxRetryTimes,
+                     config.getMaxRetryTimes());
+        valueMap.put(WC_Fields.jsapiTicket,
+                     config.getJsapiTicket());
+        valueMap.put(WC_Fields.jsapiTicketExpiresTime,
+                     config.getJsapiTicketExpiresTime());
+        valueMap.put(WC_Fields.sdkTicket,
+                     config.getSdkTicket());
+        valueMap.put(WC_Fields.sdkTicketExpiresTime,
+                     config.getSdkTicketExpiresTime());
+        valueMap.put(WC_Fields.cardApiTicket,
+                     config.getCardApiTicket());
+        valueMap.put(WC_Fields.cardApiTicketExpiresTime,
+                     config.getCardApiTicketExpiresTime());
+        valueMap.put(WC_Fields.tmpDirFile,
+                     config.getTmpDirFile());
+    }
+
+    /**
+     * 更新至缓存
+     *
+     * @param appId     微信公众号标识
+     * @param fieldName 字段名
+     * @param value     值
+     */
+    private void updateCache(String appId,
+                             String fieldName,
+                             Object value) {
+        //更新缓存
+        if (!cacheValueMap.containsKey(appId))
+            cacheValueMap.put(appId,
+                              new HashMap<>());
+        cacheValueMap.get(appId)
+                     .put(fieldName,
+                          value);
+    }
+
+    /**
      * 是否为加密存储字段
      *
      * @param fieldName 字段名称
@@ -274,18 +348,21 @@ public class ConfigManageServiceImpl
         return repository_Key.select()
                              .where(x -> x.and(WC_Fields.appId,
                                                FilterCompare.Eq,
-                                               appId)
-                                          .and(WC_Fields.enable,
-                                               FilterCompare.Eq,
-                                               true))
+                                               appId))
                              .any();
     }
 
     @Override
-    public WeChatConfig newConfig(String appId) {
+    public WeChatConfig newConfig(String appId,
+                                  String secret,
+                                  String token,
+                                  String aesKey) {
         WeChatConfig config = new WeChatConfig();
         entityExtension.initialization(config);
         config.setAppId(appId);
+        config.setSecret(secret);
+        config.setToken(token);
+        config.setAesKey(aesKey);
 //        config.setExpiresTime(-1L);
 //        config.setHttpProxyPort(-1);
 //        config.setRetrySleepMillis(-1);
@@ -293,8 +370,10 @@ public class ConfigManageServiceImpl
 //        config.setJsapiTicketExpiresTime(-1L);
 //        config.setSdkTicketExpiresTime(-1L);
 //        config.setCardApiTicketExpiresTime(-1L);
-        config.setEnable(true);
         repository_Key.insert(config);
+
+        updateCache(config);
+
         return config;
     }
 
@@ -302,43 +381,53 @@ public class ConfigManageServiceImpl
     public <T> T queryValue(String appId,
                             String fieldName,
                             Class<T> type) {
-        T value = repository_Key.select()
-                                .where(x -> x.and(WC_Fields.appId,
-                                                  FilterCompare.Eq,
-                                                  appId)
-                                             .and(WC_Fields.enable,
-                                                  FilterCompare.Eq,
-                                                  true))
-                                .first(fieldName,
-                                       type);
+        Object result;
+        //读取缓存
+        if (cacheValueMap.containsKey(appId)
+                && cacheValueMap.get(appId)
+                                .containsKey(fieldName))
+            result = (T) cacheValueMap.get(appId)
+                                      .get(fieldName);
+        else {
+            result = repository_Key.select()
+                                   .where(x -> x.and(WC_Fields.appId,
+                                                     FilterCompare.Eq,
+                                                     appId))
+                                   .first(fieldName,
+                                          type);
+        }
 
-        if (isEncryptField(fieldName))
-            return (T) decrypt((String) value);
-
-        return value;
+        if (result != null) {
+            if (isEncryptField(fieldName))
+                return (T) decrypt((String) result);
+            else
+                return (T) result;
+        } else
+            return null;
     }
 
     @Override
     public <T> void updateValue(String appId,
                                 String fieldName,
                                 T value) {
-        if (!configExist(appId))
-            newConfig(appId);
-
-        if (isEncryptField(fieldName))
-            value = (T) encrypt((String) value);
+        T finalValue;
+        if (value != null && isEncryptField(fieldName))
+            finalValue = (T) encrypt((String) value);
+        else
+            finalValue = value;
 
         repository_Key.updateDiy()
                       .where(x -> x.and(WC_Fields.appId,
                                         FilterCompare.Eq,
-                                        appId)
-                                   .and(WC_Fields.enable,
-                                        FilterCompare.Eq,
-                                        true))
+                                        appId))
                       .set(fieldName,
-                           value)
+                           finalValue)
                       .set(WC_Fields.updateTime,
                            new Date())
                       .executeAffrows();
+
+        updateCache(appId,
+                    fieldName,
+                    value);
     }
 }
