@@ -19,5 +19,9 @@ WORKDIR /app
 #镜像启动后公开的端口
 EXPOSE 80
 
+#设置环境变量
+ARG JAVA_LCTR_TEST_JASYPT_PASSWORD
+ENV JAVA_LCTR_TEST_JASYPT_PASSWORD=$JAVA_LCTR_TEST_JASYPT_PASSWORD
+
 #jar运行命令，参数使用逗号隔开
 ENTRYPOINT ["java","-jar","naive-wechat-service.jar"]

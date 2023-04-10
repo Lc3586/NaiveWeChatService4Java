@@ -26,8 +26,8 @@ public class NaiveMybatisAop {
      */
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private String valueMap2String(String name,
-                                   Object value) {
+    private String value2String(String name,
+                                Object value) {
         String value2String;
         if (value.getClass()
                  .equals(byte[].class))
@@ -77,9 +77,9 @@ public class NaiveMybatisAop {
                     arg.getParameter()
                        .keySet()
                        .stream()
-                       .map(x -> valueMap2String(x,
-                                                 arg.getParameter()
-                                                    .get(x)))
+                       .map(x -> value2String(x,
+                                              arg.getParameter()
+                                                 .get(x)))
                        .collect(Collectors.joining("\r\n")),
                     arg.getEntityType()
                        .getTypeName(),
@@ -113,9 +113,9 @@ public class NaiveMybatisAop {
                     arg.getParameter()
                        .keySet()
                        .stream()
-                       .map(x -> valueMap2String(x,
-                                                 arg.getParameter()
-                                                    .get(x)))
+                       .map(x -> value2String(x,
+                                              arg.getParameter()
+                                                 .get(x)))
                        .collect(Collectors.joining("\r\n")),
                     arg.getEntityType()
                        .getTypeName(),
