@@ -98,6 +98,8 @@ service:
   version: 1.0.0
   #启用swagger
   enableSwagger: false
+  #反向代理地址
+  pathMapping:
   #站点资源文件根目录路径
   wwwRootDirectory: wwwroot
 
@@ -110,7 +112,7 @@ project:
       # mybatis配置文件路径
       configLocation: classpath:mybatis/mybatis-config.xml
       # 需要扫描的存放实体类的包（包括TypeAliasesPackage）
-      scanEntitiesPackages: top.lctr.naive.file.system.entity.**
+      scanEntitiesPackages: top.lctr.naive.wechat.service.entity.**
       # 需要扫描的存放Mapper接口类的包（可选）
       #      scanMapperPackages: project.extension.mybatis.edge.mapper.**
       # 需要扫描的存放Mapper配置类的包

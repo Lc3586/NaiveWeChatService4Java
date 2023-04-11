@@ -1,3 +1,11 @@
+# 开发环境配置
+server:
+  # 服务器的HTTP端口，默认为8080
+  port: 80
+  servlet:
+    # 应用的访问路径
+    context-path: /
+
 # 日志配置
 logging:
   level:
@@ -7,7 +15,9 @@ logging:
 #服务配置
 service:
   #启用swagger
-  enableSwagger: false
+  enableSwagger: true
+  #反向代理地址
+  pathMapping: /api
   #站点资源文件根目录路径
   wwwRootDirectory: /app-data/naive-wechat-service/wwwroot
 
@@ -16,4 +26,4 @@ project:
   extension:
     wechat:
       #当前服务器的根地址
-      rootUrl: https://wechat.lctr.top
+      rootUrl: ENC(z+Pfbiiy4SxtBGPXNmFDrqzhdrlqRONQbU1j6jtOXLWAGWRjhYx+NQ==)

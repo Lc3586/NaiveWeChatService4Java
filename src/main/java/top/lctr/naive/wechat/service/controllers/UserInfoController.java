@@ -28,8 +28,8 @@ import java.util.Collection;
                 consumes = "application/json",
                 produces = "application/json")
 @Scope("prototype")
-@Api(tags = "微信服务")
-@OpenApiGroup("微信用户信息")
+@Api(tags = "微信用户信息")
+@OpenApiGroup("微信服务")
 public class UserInfoController
         extends BaseController {
     public UserInfoController(IUserInfoService userInfoService) {

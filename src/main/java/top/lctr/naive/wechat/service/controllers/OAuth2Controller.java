@@ -16,11 +16,11 @@ import top.lctr.naive.wechat.service.business.service.Interface.IOAuth2Service;
  */
 @RestController
 @RequestMapping(path = "/wechat/oauth2",
-                consumes = "application/json",
-                produces = "application/json")
+                consumes = "*/*",
+                produces = "*/*")
 @Scope("prototype")
-@Api(tags = "微信服务")
-@OpenApiGroup("网页授权")
+@Api(tags = "网页授权")
+@OpenApiGroup("微信服务")
 public class OAuth2Controller
         extends BaseController {
     public OAuth2Controller(IOAuth2Service oAuth2Service) {
@@ -39,10 +39,11 @@ public class OAuth2Controller
      * @param returnUrl 回调地址
      */
     @GetMapping(value = "/base")
-    @ApiOperation("发起基础授权\r\n"
-            + "跳转至微信的授权页面\r\n"
-            + "结束后重定向至回调地址，并附带以下参数：\r\n"
-            + "\tstate，用于获取授权信息")
+    @ApiOperation(value = "发起基础授权",
+                  notes = "跳转至微信的授权页面"
+                          + "\r\n结束后重定向至回调地址，并附带以下参数："
+                          + "\r\n\tstate，用于获取授权信息",
+                  response = Object.class)
     public void base(
             @Parameter(name = "groupId",
                        description = "分组标识")
@@ -65,10 +66,11 @@ public class OAuth2Controller
      * @param returnUrl 回调地址
      */
     @GetMapping(value = "/user-info")
-    @ApiOperation("发起用户信息授权\r\n"
-            + "跳转至微信的授权页面\r\n"
-            + "结束后重定向至回调地址，并附带以下参数：\r\n"
-            + "\tstate，用于获取用户信息")
+    @ApiOperation(value = "发起用户信息授权",
+                  notes = "跳转至微信的授权页面"
+                          + "\r\n结束后重定向至回调地址，并附带以下参数："
+                          + "\r\n\tstate，用于获取用户信息",
+                  response = Object.class)
     public void userInfo(
             @Parameter(name = "groupId",
                        description = "分组标识")

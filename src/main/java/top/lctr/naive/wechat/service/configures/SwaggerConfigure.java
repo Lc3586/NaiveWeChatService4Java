@@ -1,18 +1,24 @@
 package top.lctr.naive.wechat.service.configures;
 
 import io.swagger.models.auth.In;
+import io.swagger.v3.oas.models.OpenAPI;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.oas.web.OpenApiTransformationContext;
+import springfox.documentation.oas.web.WebMvcOpenApiTransformationFilter;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
+import io.swagger.v3.oas.models.servers.Server;
 import top.lctr.naive.wechat.service.config.ServiceConfig;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +30,8 @@ import java.util.List;
  */
 @Configuration
 @EnableConfigurationProperties({ServiceConfig.class})
-public class SwaggerConfigure {
+public class SwaggerConfigure
+        implements WebMvcOpenApiTransformationFilter {
     public SwaggerConfigure(ServiceConfig serviceConfig) {
         this.serviceConfig = serviceConfig;
     }
@@ -33,11 +40,6 @@ public class SwaggerConfigure {
      * 服务配置
      */
     private final ServiceConfig serviceConfig;
-
-    /**
-     * 反向代理路径
-     */
-    public static String pathMapping = "/";
 
     /**
      * 创建API
@@ -63,7 +65,7 @@ public class SwaggerConfigure {
                 /* 设置安全模式，swagger可以设置访问token */
                 .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts())
-                .pathMapping(pathMapping);
+                .pathMapping(serviceConfig.getPathMapping());
     }
 
     /**
@@ -123,5 +125,62 @@ public class SwaggerConfigure {
                 // 版本
                 .version("版本号:" + serviceConfig.getVersion())
                 .build();
+    }
+
+    /**
+     * 根据实际情况转换http模式
+     */
+    @Override
+    public OpenAPI transform(OpenApiTransformationContext<HttpServletRequest> context) {
+        OpenAPI swagger = context.getSpecification();
+
+        if (!context.request()
+                    .isPresent())
+            return swagger;
+
+        HttpServletRequest request = context.request()
+                                            .get();
+
+        String scheme = "http";
+        String referer = request.getHeader("Referer");
+
+        if (StringUtils.hasLength(referer)) {
+            //获取协议
+            scheme = referer.split(":")[0];
+        }
+
+        List<Server> servers = new ArrayList<>();
+        String finalScheme = scheme;
+        //重新组装server信息
+        swagger.getServers()
+               .forEach(item -> {
+
+                   //替换协议,去掉默认端口
+                   item.setUrl(clearDefaultPort(item.getUrl()
+                                                    .replace("http",
+                                                             finalScheme)));
+                   servers.add(item);
+               });
+        swagger.setServers(servers);
+        return swagger;
+    }
+
+    /**
+     * 清除默认端口
+     */
+    private String clearDefaultPort(String url) {
+        String port = url.split(":")[2];
+        if ("80".equals(port) || "443".equals(port)) {
+            return url.replace(":80",
+                               "")
+                      .replace(":443",
+                               "");
+        }
+        return url;
+    }
+
+    @Override
+    public boolean supports(DocumentationType documentationType) {
+        return documentationType.equals(DocumentationType.OAS_30);
     }
 }

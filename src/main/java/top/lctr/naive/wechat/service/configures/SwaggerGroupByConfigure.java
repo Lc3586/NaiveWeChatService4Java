@@ -55,7 +55,7 @@ public class SwaggerGroupByConfigure {
                 .build()
                 .securitySchemes(SwaggerConfigure.securitySchemes())
                 .securityContexts(SwaggerConfigure.securityContexts())
-                .pathMapping(SwaggerConfigure.pathMapping);
+                .pathMapping(serviceConfig.getPathMapping());
     }
 
     /**
@@ -110,7 +110,7 @@ public class SwaggerGroupByConfigure {
                     .build()
                     .securitySchemes(SwaggerConfigure.securitySchemes())
                     .securityContexts(SwaggerConfigure.securityContexts())
-                    .pathMapping(SwaggerConfigure.pathMapping);
+                    .pathMapping(serviceConfig.getPathMapping());
 
             //注入为单例
             defaultListableBeanFactory.registerSingleton(

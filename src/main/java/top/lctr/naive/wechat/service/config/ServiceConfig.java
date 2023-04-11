@@ -37,6 +37,11 @@ public class ServiceConfig {
     private Boolean enableSwagger;
 
     /**
+     * 反向代理地址
+     */
+    private String pathMapping;
+
+    /**
      * 站点资源文件根目录路径
      */
     private String wwwRootDirectory;

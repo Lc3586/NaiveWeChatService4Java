@@ -28,8 +28,8 @@ import java.util.Collection;
                 consumes = "application/json",
                 produces = "application/json")
 @Scope("prototype")
-@Api(tags = "微信服务")
-@OpenApiGroup("微信配置")
+@Api(tags = "微信配置")
+@OpenApiGroup("微信服务")
 public class ConfigController
         extends BaseController {
     public ConfigController(IConfigManageService configManageService) {
