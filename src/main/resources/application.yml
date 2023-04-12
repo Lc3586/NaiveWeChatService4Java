@@ -103,6 +103,15 @@ service:
   #站点资源文件根目录路径
   wwwRootDirectory: wwwroot
 
+#微信公众号配置
+mp:
+  #消息处理模块
+  message:
+    #启用
+    enable: true
+    #线程池大小
+    threadPoolSize: -1
+
 #项目拓展
 project:
   extension:

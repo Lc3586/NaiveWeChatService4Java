@@ -1,12 +1,16 @@
 package top.lctr.naive.wechat.service.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.annotation.JSONType;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.apache.ibatis.type.Alias;
 import project.extension.mybatis.edge.annotations.ColumnSetting;
 import project.extension.mybatis.edge.annotations.TableSetting;
 import project.extension.openapi.annotations.OpenApiDescription;
+import project.extension.openapi.annotations.OpenApiIgnore;
 import project.extension.openapi.annotations.OpenApiSubTag;
 
 import java.util.Date;
@@ -19,8 +23,14 @@ import java.util.Date;
  */
 @TableSetting("WechatConfig")
 @Alias("WechatConfig")
+@JSONType(ignores = "serialVersionUID")
 @Data
 public class WeChatConfig {
+    @ColumnSetting(isIgnore = true)
+    @OpenApiIgnore
+    @JsonIgnore
+    private static final long serialVersionUID = 1L;
+
     /**
      * 主键
      */
@@ -110,6 +120,8 @@ public class WeChatConfig {
                     "Detail",
                     "Create",
                     "Edit"})
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @JSONField(serializeUsing = ToStringSerializer.class)
     private Long expiresTime;
 
     /**
@@ -207,6 +219,8 @@ public class WeChatConfig {
                     "Detail",
                     "Create",
                     "Edit"})
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @JSONField(serializeUsing = ToStringSerializer.class)
     private Long jsapiTicketExpiresTime;
 
     /**
@@ -229,6 +243,8 @@ public class WeChatConfig {
                     "Detail",
                     "Create",
                     "Edit"})
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @JSONField(serializeUsing = ToStringSerializer.class)
     private Long sdkTicketExpiresTime;
 
     /**
@@ -251,6 +267,8 @@ public class WeChatConfig {
                     "Detail",
                     "Create",
                     "Edit"})
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @JSONField(serializeUsing = ToStringSerializer.class)
     private Long cardApiTicketExpiresTime;
 
     /**

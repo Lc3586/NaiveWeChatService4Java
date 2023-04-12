@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * @date 2023-03-02
  */
 @Configuration
-@AutoConfigureBefore(NaiveWeChatHandlerConfigure.class)
+@AutoConfigureBefore(NaiveWeChatConfigure.class)
 public class NaiveMybatisAop {
     /**
      * 日志组件

@@ -11,29 +11,47 @@ import project.extension.wechat.config.PayConfig;
 import project.extension.wechat.core.INaiveWeChatService;
 import project.extension.wechat.core.mp.handler.IWeChatOAuth2Handler;
 import project.extension.wechat.core.mp.servlet.WeChatOAuth2Servlet;
+import project.extension.wechat.core.mp.standard.IWeChatMpService;
 import project.extension.wechat.core.pay.handler.IWeChatPayNotifyHandler;
+import top.lctr.naive.wechat.service.business.handler.MpMessageHandler;
 import top.lctr.naive.wechat.service.business.service.Interface.IConfigManageService;
+import top.lctr.naive.wechat.service.business.service.Interface.IMessageService;
 import top.lctr.naive.wechat.service.business.utils.ConfigDatabaseStorage;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 配置微信服务处理类
+ * 配置微信服务
  *
  * @author LCTR
  * @date 2023-03-28
  */
 @Configuration
-public class NaiveWeChatHandlerConfigure {
+public class NaiveWeChatConfigure {
     /**
      * 设置微信配置存储对象
      */
     @Autowired
     public void setupConfigStorage(INaiveWeChatService naiveWeChatService,
                                    IConfigManageService configManageService) {
-        naiveWeChatService.getDefaultWeChatMpService()
-                          .setMpConfigStorage((mpConfig) -> new ConfigDatabaseStorage(mpConfig,
-                                                                                      configManageService));
+        for (String mp : naiveWeChatService.allMp(true)) {
+            naiveWeChatService.getWeChatMpService(mp)
+                              .setMpConfigStorage((mpConfig) -> new ConfigDatabaseStorage(mpConfig,
+                                                                                          configManageService));
+        }
+    }
+
+    /**
+     * 设置微信消息路由
+     */
+    @Autowired
+    public void setupMessageRouter(INaiveWeChatService naiveWeChatService,
+                                   IMessageService messageRouterService) {
+        for (String mp : naiveWeChatService.allMp(true)) {
+            IWeChatMpService weChatMpService = naiveWeChatService.getWeChatMpService(mp);
+            weChatMpService.setWxMpMessageRouter((mpConfig) -> MpMessageHandler.createMessageRouter(mpConfig,
+                                                                                                    weChatMpService));
+        }
     }
 
     /**
